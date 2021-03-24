@@ -13,6 +13,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class YahooRegistrationNegative {
 
@@ -23,6 +24,7 @@ public class YahooRegistrationNegative {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
     }
 
     @DataProvider(name = "login-file-negativeInfo")
@@ -32,7 +34,7 @@ public class YahooRegistrationNegative {
 
 
     @Test(dataProvider = "login-file-negativeInfo")
-    public void loginYahoo(String firstName, String lastName, String email, String password, String phone, String birthMonth, String day, String year){
+    public void loginYahoo(String firstName, String lastName, String email, String password, String phone, String day, String year) throws InterruptedException {
         driver.get("https://finance.yahoo.com/");
         //намира бутона приемам и го натиска
         WebElement agreeButton = driver.findElement(By.name("agree"));
@@ -46,37 +48,56 @@ public class YahooRegistrationNegative {
         //намираме инпута за първо име и въвеждаме стойността зададена в csv файла
         WebElement userFirstNameInput = driver.findElement(By.id("usernamereg-firstName"));
         userFirstNameInput.clear();
+        userFirstNameInput.click();
         userFirstNameInput.sendKeys(firstName);
         //намираме инпута за второ име и въвеждаме стойността зададена в csv файла
         WebElement userLastNameInput = driver.findElement(By.id("usernamereg-lastName"));
         userLastNameInput.clear();
+        userLastNameInput.click();
         userLastNameInput.sendKeys(lastName);
+
+        driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
         //намираме инпута за email и въвеждаме стойността зададена в csv файла
         WebElement emailInput = driver.findElement(By.id("usernamereg-yid"));
         emailInput.clear();
+        emailInput.click();
         emailInput.sendKeys(email);
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         //намираме инпута за password и въвеждаме стойността зададена в csv файла
         WebElement passwordInput = driver.findElement(By.id("usernamereg-password"));
         passwordInput.clear();
+        passwordInput.click();
         passwordInput.sendKeys(password);
+
+        Thread.sleep(1000);
         //намираме инпута за phone number и въвеждаме стойността зададена в csv файла
         WebElement phoneNumberInput = driver.findElement(By.id("usernamereg-phone"));
         phoneNumberInput.clear();
+        phoneNumberInput.click();
         phoneNumberInput.sendKeys(phone);
         //намираме инпута за месец на раждане и въвеждаме стойността зададена в csv файла
         WebElement birthMonthDropDown = driver.findElement(By.id("usernamereg-month"));
-        birthMonthDropDown.clear();
+        driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
+        //birthMonthDropDown.clear();
         birthMonthDropDown.click();
         WebElement selectBirthMonth = driver.findElement(By.cssSelector("[value=3]"));
+        //WebElement selectBirthMonth = driver.findElement(By.xpath("//option[contains(text(),'March')]"));
         selectBirthMonth.click();
         //намираме инпута за phone number и въвеждаме стойността зададена в csv файла
         WebElement birthDayInput = driver.findElement(By.id("usernamereg-day"));
         birthDayInput.clear();
+        birthDayInput.click();
         birthDayInput.sendKeys(day);
         //намираме инпута за phone number и въвеждаме стойността зададена в csv файла
         WebElement birthYearInput = driver.findElement(By.id("usernamereg-year"));
         birthYearInput.clear();
+        birthYearInput.click();
         birthYearInput.sendKeys(year);
+        //Thread.sleep(10000);
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        WebElement continueBtn = driver.findElement(By.id("reg-submit-button"));
+        continueBtn.click();
+
 
     }
 
