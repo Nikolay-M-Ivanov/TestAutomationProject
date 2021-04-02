@@ -1,30 +1,78 @@
 package com.selenium.automation.project.base;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
+import com.selenium.automation.project.driver.DriverFactory;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeMethod;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 
 public class TestUtil {
 
-    protected WebDriver driver;
-
-    public TestUtil(WebDriver driver) {
+    public WebDriver driver;
+    private String url;
+    private String browser;
+    private int implicitWait;
+    /*public TestUtil(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
+    }*/
+
+    /*@BeforeSuite
+    public void readConfigProperties() {
+        try (
+                FileInputStream configFile = new FileInputStream("src/test/resources/config.properties")) {
+            Properties config = new Properties();
+            config.load(configFile);
+            url = config.getProperty("urlAddress");
+            implicitWait = Integer.parseInt(config.getProperty("implicitWait"));
+            // browser to be taken from property file
+            browser = config.getProperty("browser");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }*/
+
+    @BeforeMethod
+    public void setUp() {
+        setupBrowserDriver();
+        loadUrl();
     }
 
-    @BeforeTest
-    public void setUp() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
+    public void loadUrl() {
+        driver.get(url);
     }
+
+    public void setupBrowserDriver() {
+        try (
+                FileInputStream configFile = new FileInputStream("src/test/resources/config.properties")) {
+            Properties config = new Properties();
+            config.load(configFile);
+            url = config.getProperty("urlAddress");
+            implicitWait = Integer.parseInt(config.getProperty("implicitWait"));
+            // browser to be taken from property file
+            browser = config.getProperty("browser");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        switch (browser) {
+            case "chrome":
+                driver = DriverFactory.getChromeDriver(implicitWait);
+                break;
+            case "firefox":
+                driver = DriverFactory.getFirefoxDriver(implicitWait);
+            default:
+                throw new IllegalStateException("Unsuported browser");
+        }
+
+    }
+
     @AfterTest
     public void tearDown() {
-            driver.close();  //само затваря браузъра
-        // driver.quit();  //спира самия селениум, разваля връзката
+        //driver.close();  //само затваря браузъра
+        driver.quit();  //спира самия селениум, разваля връзката
     }
 }

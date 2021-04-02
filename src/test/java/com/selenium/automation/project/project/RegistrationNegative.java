@@ -4,7 +4,6 @@ import com.opencsv.exceptions.CsvException;
 import com.selenium.automation.project.base.TestUtil;
 import com.selenium.automation.project.utils.CsvReader;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.DataProvider;
@@ -14,22 +13,18 @@ import java.io.IOException;
 
 public class RegistrationNegative extends TestUtil {
 
-    public RegistrationNegative(WebDriver driver) {
-        super(driver);
-    }
-
     @DataProvider(name = "login-file-negativeInfo")
     public static Object[][] dataProviderFromCsvFile() throws IOException, CsvException {
         return CsvReader.readCsvFile("src/test/resources/login-file-negative.csv");
     }
 
-
     @Test(dataProvider = "login-file-negativeInfo")
     public void loginYahoo(String firstName, String lastName, String email, String password, String phone, String day, String year) {
-        driver.get("https://finance.yahoo.com/");
-        //намира бутона приемам и го натиска
         WebElement agreeButton = driver.findElement(By.name("agree"));
-        agreeButton.click();
+        //намира бутона приемам и го натиска
+        if (agreeButton.isDisplayed()) {
+            agreeButton.click();
+        }
         //намира бутона за login и го натиска
         WebElement loginButton = driver.findElement(By.xpath("//span[contains(text(),'Sign in')]"));
         loginButton.click();
