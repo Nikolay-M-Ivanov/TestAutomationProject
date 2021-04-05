@@ -2,6 +2,7 @@ package com.selenium.automation.project.base;
 
 import com.selenium.automation.project.driver.DriverFactory;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 
@@ -15,25 +16,6 @@ public class TestUtil {
     private String url;
     private String browser;
     private int implicitWait;
-    /*public TestUtil(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
-    }*/
-
-    /*@BeforeSuite
-    public void readConfigProperties() {
-        try (
-                FileInputStream configFile = new FileInputStream("src/test/resources/config.properties")) {
-            Properties config = new Properties();
-            config.load(configFile);
-            url = config.getProperty("urlAddress");
-            implicitWait = Integer.parseInt(config.getProperty("implicitWait"));
-            // browser to be taken from property file
-            browser = config.getProperty("browser");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
 
     @BeforeMethod
     public void setUp() {
@@ -65,7 +47,7 @@ public class TestUtil {
             case "firefox":
                 driver = DriverFactory.getFirefoxDriver(implicitWait);
             default:
-                throw new IllegalStateException("Unsuported browser");
+                throw new IllegalStateException("Unsupported browser");
         }
 
     }
