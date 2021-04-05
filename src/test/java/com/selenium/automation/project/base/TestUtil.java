@@ -2,7 +2,6 @@ package com.selenium.automation.project.base;
 
 import com.selenium.automation.project.driver.DriverFactory;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 
