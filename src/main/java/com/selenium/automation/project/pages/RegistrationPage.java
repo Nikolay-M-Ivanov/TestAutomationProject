@@ -3,15 +3,10 @@ package com.selenium.automation.project.pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
-public class RegistrationPage {
+public class RegistrationPage extends HomePage{
 
-    protected final WebDriver driver;
-
-    @FindBy(name = "agree")
-    private WebElement agreeBtn;
 
     @FindBy(xpath = "//span[contains(text(),'Sign in')]")
     private WebElement loginBtn;
@@ -47,14 +42,10 @@ public class RegistrationPage {
     private WebElement sumbitBtn;
 
     public RegistrationPage(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
+        super(driver);
     }
 
     public void goToCreateAccountPage(){
-        if (agreeBtn.isDisplayed()){
-            agreeBtn.click();
-        }
         loginBtn.click();
         createAccountBtn.click();
     }

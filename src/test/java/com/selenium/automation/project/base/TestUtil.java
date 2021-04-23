@@ -45,6 +45,7 @@ public class TestUtil {
                 break;
             case "firefox":
                 driver = DriverFactory.getFirefoxDriver(implicitWait);
+                break;
             default:
                 throw new IllegalStateException("Unsupported browser");
         }
