@@ -20,6 +20,7 @@ public class DriverFactory {
         WebDriverManager.firefoxdriver().setup();
         WebDriver driver = new FirefoxDriver(options);
         driver.manage().timeouts().implicitlyWait(wait, TimeUnit.SECONDS);
+        driver.manage().window().maximize();
 
         return driver;
     }
@@ -31,6 +32,7 @@ public class DriverFactory {
         WebDriverManager.chromedriver().setup();
         WebDriver driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(wait, TimeUnit.SECONDS);
+        driver.manage().window().maximize();
 
         return driver;
     }
