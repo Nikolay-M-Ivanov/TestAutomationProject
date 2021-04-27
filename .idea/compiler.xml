@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="TestAutomationProject" />
+        <module name="SeleniumAutomationQA" />
       </profile>
     </annotationProcessing>
   </component>

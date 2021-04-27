@@ -50,7 +50,8 @@ public class SearchCompany extends HomePage {
             System.out.println("No dividends");
         } else System.out.println("Given dividends are " + dividendsFromCsv);
     }
-    public String checkingPriceMrq(){
+
+    public String checkingPriceMrq() {
         executeExplicitWait(20, ExpectedConditions.visibilityOf(priceMrq), 4);
         priceMrq.getText();
         return null;

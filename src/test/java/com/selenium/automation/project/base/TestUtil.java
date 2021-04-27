@@ -3,7 +3,6 @@ package com.selenium.automation.project.base;
 import com.selenium.automation.project.driver.DriverFactory;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 
 import java.io.FileInputStream;
@@ -54,9 +53,8 @@ public class TestUtil {
     }
 
     @AfterMethod
-    //@AfterTest
     public void tearDown() {
-        driver.close();  //само затваря браузъра
-        //driver.quit();  //спира самия селениум, разваля връзката
+        driver.close();
+       // driver.quit();  //спира самия селениум, разваля връзката
     }
 }
